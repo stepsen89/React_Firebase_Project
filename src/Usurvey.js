@@ -14,10 +14,30 @@ const config = {
   firebase.initializeApp(config);
 
 class Usurvey extends Component {
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+      uuid: uuid.v1(),
+      studentName: '',
+      answers: {
+        answer1: '',
+        answer2: '',
+        answer3: ''
+      },
+      isSubmitted: false
+    };
+  }
   render(){
+    let studentName;
+    let questions;
+
     return(
       <div>
-        I am from Survey Component
+        {studentName}
+        -----------------
+        {questions}
       </div>
     );
   }
