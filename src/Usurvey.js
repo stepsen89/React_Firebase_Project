@@ -3,15 +3,16 @@ import React, { Component } from 'react';
 const firebase = require('firebase');
 const uuid = require('uuid');
 
-const config = {
-    apiKey: "AIzaSyB-9zrZH5Qo2YL5E_PAahpJ2IZDyqkXGXY",
-    authDomain: "usurvey-e6bf4.firebaseapp.com",
-    databaseURL: "https://usurvey-e6bf4.firebaseio.com",
-    projectId: "usurvey-e6bf4",
-    storageBucket: "usurvey-e6bf4.appspot.com",
-    messagingSenderId: "483695084787"
-  };
-  firebase.initializeApp(config);
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyB-9zrZH5Qo2YL5E_PAahpJ2IZDyqkXGXY",
+  authDomain: "usurvey-e6bf4.firebaseapp.com",
+  databaseURL: "https://usurvey-e6bf4.firebaseio.com",
+  projectId: "usurvey-e6bf4",
+  storageBucket: "usurvey-e6bf4.appspot.com",
+  messagingSenderId: "483695084787"
+};
+firebase.initializeApp(config);
 
 class Usurvey extends Component {
 
@@ -38,7 +39,11 @@ class Usurvey extends Component {
   };
 
   questionSubmit(event){
-
+    firebase.database().ref('uSurvey/'+this.state.uuid).set({
+      studentName: this.state.studentName,
+      answers: this.state.answers
+    });
+    this.setState({isSubmitted: true});
   }
 
   constructor(props){
@@ -46,7 +51,7 @@ class Usurvey extends Component {
 
     this.state = {
       uuid: uuid.v1(),
-      studentName: 'Test',
+      studentName: '',
       answers: {
         answer1: '',
         answer2: '',
@@ -84,21 +89,23 @@ class Usurvey extends Component {
             </div>
             <div className="card">
               <label> What kind of programming language you like the most? </label> <br />
-              <input type="radio" name="answer2" value="Technology" onChange={this.answerSelected}/> JavaScript
-              <input type="radio" name="answer2" value="Design" onChange={this.answerSelected}/> Python
-              <input type="radio" name="answer2" value="Digital Marketing" onChange={this.answerSelected}/> Other
+              <input type="radio" name="answer2" value="JavaScript" onChange={this.answerSelected}/> JavaScript
+              <input type="radio" name="answer2" value="Python" onChange={this.answerSelected}/> Python
+              <input type="radio" name="answer2" value="Other" onChange={this.answerSelected}/> Other
             </div>
             <div className="card">
               <label> What kind of IDE you like the most? </label> <br />
-              <input type="radio" name="answer3" value="Technology" onChange={this.answerSelected}/> VS Code
-              <input type="radio" name="answer3" value="Design" onChange={this.answerSelected}/> Atom
-              <input type="radio" name="answer3" value="Digital Marketing" onChange={this.answerSelected}/> XCode
+              <input type="radio" name="answer3" value="VSCode" onChange={this.answerSelected}/> VS Code
+              <input type="radio" name="answer3" value="Atom" onChange={this.answerSelected}/> Atom
+              <input type="radio" name="answer3" value="XCode" onChange={this.answerSelected}/> XCode
             </div>
             <input type="submit" value="submit" className="feedback-button"/>
           </form>
           </div>
-    } else if (this.state.isSubmitted === true){
-
+    } else if (this.state.studentName !== '' && this.state.isSubmitted === true){
+      studentName = <div>
+        <h1> Thanks, {this.state.studentName}, for submitting your answers. </h1>
+      </div>
     }
 
 
