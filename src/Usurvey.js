@@ -16,18 +16,22 @@ const config = {
 class Usurvey extends Component {
 
   nameSubmit(event){
-    let studentName = this.refs.name.value;
+    var studentName = this.refs.name.value;
     this.setState({studentName : studentName}, function() {
       console.log(this.state);
     });
   }
+
+  answerSelected(event){
+
+  };
 
   constructor(props){
     super(props);
 
     this.state = {
       uuid: uuid.v1(),
-      studentName: '',
+      studentName: 'Test',
       answers: {
         answer1: '',
         answer2: '',
@@ -37,6 +41,8 @@ class Usurvey extends Component {
     };
 
     this.nameSubmit = this.nameSubmit.bind(this);
+    this.answerSelected = this.answerSelected.bind(this);
+    this.questionSubmit = this.questionSubmit.bind(this);
   }
   render(){
     let studentName;
@@ -52,7 +58,30 @@ class Usurvey extends Component {
       questions = '';
     } else if (this.state.studentName !== '' && this.state.isSubmitted === false){
       studentName = <h1> Hey there, welcome {this.state.studentName}!!</h1>
-      questions = <p> Hey there </p>
+        questions = <div>
+          <h2> Here are some questions </h2>
+          <form onSubmit={this.questionSubmit}>
+            <div className="card">
+              <label> What kind of courses you like the most? </label> <br />
+              <input type="radio" name="answer1" value="Technology" onChange={this.answerSelected}/> Technology
+              <input type="radio" name="answer1" value="Design" onChange={this.answerSelected}/> Design
+              <input type="radio" name="answer1" value="Digital Marketing" onChange={this.answerSelected}/> Digital Marketing
+            </div>
+            <div className="card">
+              <label> What kind of programming language you like the most? </label> <br />
+              <input type="radio" name="answer2" value="Technology" onChange={this.answerSelected}/> JavaScript
+              <input type="radio" name="answer2" value="Design" onChange={this.answerSelected}/> Python
+              <input type="radio" name="answer2" value="Digital Marketing" onChange={this.answerSelected}/> Other
+            </div>
+            <div className="card">
+              <label> What kind of IDE you like the most? </label> <br />
+              <input type="radio" name="answer3" value="Technology" onChange={this.answerSelected}/> VS Code
+              <input type="radio" name="answer3" value="Design" onChange={this.answerSelected}/> Atom
+              <input type="radio" name="answer3" value="Digital Marketing" onChange={this.answerSelected}/> XCode
+            </div>
+            <input type="submit" value="submit" className="feedback-button"/>
+          </form>
+          </div>
     }
 
 
