@@ -72,7 +72,7 @@ class Usurvey extends Component {
       studentName = <div>
         <h1> Hey Student, please let us know your name </h1>
         <form onSubmit={this.nameSubmit}>
-          <input type="text" placeholder="Enter your name here" ref="name"/>
+          <input className="namefield" type="text" placeholder="Enter your name here" ref="name"/>
         </form>
       </div>;
       questions = '';
@@ -112,7 +112,6 @@ class Usurvey extends Component {
     return(
       <div>
         {studentName}
-        -----------------
         {questions}
       </div>
     );
